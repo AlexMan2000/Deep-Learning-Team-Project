@@ -1,0 +1,168 @@
+<style>
+    *{
+        margin:0;
+        padding:0;
+    }
+
+    .container-1{
+        display:flex;
+        flex-direction:row;
+		
+    }
+
+    .container-2{
+        display:flex;
+        flex-direction:column;
+		width:500px;
+    }
+
+    .container-3{
+        display:flex;
+        flex-direction:row;
+		margin-left:200px;
+		margin-top:80px;
+		border-radius:10px;
+		border-width:20px;
+		border: 5px solid lightblue;
+		width:800px;
+		height:600px;
+		
+    }
+
+    .container-4{
+        display:flex;
+    }
+
+    .container-5{
+        display:flex;
+        flex-direction:column;
+    }
+
+    .container-1 div, .container-2 div,.container-3 div{
+        border:1px #ccc solid;
+        padding:10px;
+    }
+
+    .box-1{
+        flex:1;
+		height:500px;
+		text-align:center;
+		line-height:500px;
+    }
+
+    .box-2{
+        flex:1;
+        width:100;
+    }
+
+    .box-3{
+        flex:1;
+        width:100;
+    }
+
+
+
+    .box-5{
+        flex:1;
+        order:1;
+		
+    }
+
+    .box-6{
+        flex:1;
+        order:2;
+    }
+    
+    .box-7{
+        flex:1;
+        order:3;
+    }
+	
+	.box-8 {
+		flex:1;
+		order:4;
+	}
+	
+	.switch {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+
+	
+</style>
+
+
+<form action="/run" method="POST">
+<div class='container-3'>
+    <div class='container-1'>
+            <div class='box-1'>
+                <label for "Model">Select a model:</label>
+                <select name="Model" id="Model">
+					<option value="res">ResNetGRU</option>
+                    <option value="vgg">VGGNetLSTM</option>
+                    
+                </select>
+            </div>
+        
+    </div>
+    <div class='container-2'>
+        {%if not img%}
+        <div class='box-5'>
+            <label for "image">Select an image:</label>
+	        <input type="file" name = "image" placeholder="image"/>
+			
+        </div>
+        {% endif %}
+        {%if img%}
+        <div class='box-5'>
+            <img id="display" class="display" src={{img}} width="380" height="270" />
+		</div>
+        {%endif%}
+		
+		
+        {%if not result%}
+        <div class='box-6'>
+	        <input type="submit" value = submit />
+            </form>
+        </div>
+        {%endif%}
+        {%if result%}
+        <div class='box-6'>
+            {{result}}
+        </div>
+        {%endif%}
+        <div class='box-7'>
+            <a href='./'>refresh</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	function displayAttention(){
+		console.log("haha");
+		var tmp_list=["{{img}}","{{attention}}"];
+		console.log(tmp_list);
+		var tmp_src = document.getElementById("display").src;
+		if (tmp_src==="http://127.0.0.1:5000/static/~original_image~86542183_5e312ae4d4.jpg"){
+		var element = document.getElementById("display");
+		element.src=tmp_list[1];
+		element.style.height="400";
+		element.style.transform="scaleX(1) scaleY(2)";}
+		else{
+		var element =document.getElementById("display");
+		element.src=tmp_list[0];
+		element.style.height="270";
+		}
+		
+	
+	}
+
+	
+</script>
